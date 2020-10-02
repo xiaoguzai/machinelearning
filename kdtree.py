@@ -62,6 +62,8 @@ def  createtree(head,flag,begin,end):
         return  None
     if flag == True:
     #按照横坐标对相应的节点进行分类
+    #flag == True的情况下下面根据x坐标排序进行分类
+    #左孩子为x节点坐标比根节点小的坐标，右孩子为x节点坐标比根节点大的坐标
         sortx(begin,end)
         mid = (begin+end)//2
         #这里也可以写作mid = (begin+end+1)//2,李航老师的书中是带+1这一步的
@@ -71,6 +73,8 @@ def  createtree(head,flag,begin,end):
         head.right = createtree(head.right,False,mid+1,end)
         return  head
     else:
+    #按照纵坐标对相应的节点进行分类
+    #根节点为mid对应的内容，放置中间位置对应的数值
         sorty(begin,end)
         mid = (begin+end)//2
         #这里也可以写作mid = (begin+end+1)//2,李航老师的书中是带+1这一步的
@@ -130,6 +134,7 @@ def  searchtree(head,flag):
         head.visit = True
         calculatedis(head.val1,head.val2)
     elif    head.left != None  and  head.right == None:
+    #右子树不为空的时候对右子树进行搜索，计算相应的距离
         searchtree(head.left,bool(1-flag))
         head.visit = True
         calculatedis(head.val1,head.val2)
@@ -171,7 +176,8 @@ def  searchtree(head,flag):
                 maxdis = (result[len(result)-1][0]-posx)*(result[len(result)-1][0]-posx)+(result[len(result)-1][1]-posy)*(result[len(result)-1][1]-posy)
                 if  maxdis > (posy-head.val2)*(posy-head.val2):
                     searchtree(head.left,bool(1-flag))
-            #分析左子树(下面)是否可以找出比当前最大值要小的距离-
+            #分析左子树(下面)是否可以找出比当前最大值要小的距离
+            #如果有可能的话(对应距离画出来的圆的半径跨越过分界点的时候)需要继续查找另一半
     else:
         #达到一个底部节点时
         head.visit = True
