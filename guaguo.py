@@ -18,6 +18,8 @@ def  send_request(name,url):
     fh.write(question+'***')
     #提取出相应的问题
     answer = bs.find_all('div',class_='answer-content')
+    #所有回答的内容在answer-content对应的标签之下，这里从
+    #标签内提取出相应的内容
     #result = []
     flag = False
     for  item  in  answer:
@@ -61,7 +63,7 @@ def  send_request(name,url):
     fh.write('***')
     for  item  in  answer:
         item1 = item.find_all('a')
-        #找出标签内对应的药品名称
+        #找出标签内对应的药品名称，药品带具体的链接，所以需要需要将对应a标签的内容提取出来
         for  j  in  item1:
             if  j.text.find('赞') == -1 and j.text != '投诉' and j.text != '追答' and j.text != '查看原图' and j.text != '收起':
                 print(j.text,end = '    ')
