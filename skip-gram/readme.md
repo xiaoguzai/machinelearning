@@ -6,5 +6,5 @@
   接下来就是定义EmbeddingModel的对应层了，这里面有两个矩阵，一个是self.in_embed矩阵，负责记录正采样的权重，一个是self.out_embed矩阵，负责提取记录负采样的权重，假设提取正采样的个数为C，负采样的个数为K，B代表每一次的批次数量，则input_embedding = B * embed_size(维度)，pos_embedding = B * (2C) * embed_size(从self.in_embed中取出的正采样的权重值)，neg_embedding = B * (2C * K) * embed_size(从self.out_embed中取出的负采样的权重值)，
 Input_embedding = [B,embed_size],pos_embedding = [B,2 * C,embed_size],neg_embedding = [B,2 * K,pos_embedding]，log_pos为input_embedding与pos_embedding相乘，[2 * C,embed_size] * [embed_size,1] = [2 * C,1],所以log_pos = [B,2 * C,1]，化简之后为[B,2 * C]，同理可算出来log_neg，然后使用公式loss = logsigmoid(log_pos)+logsigmoid(log_neg)进行求和，算出对应的损失函数。
 ## 步骤4
-	最后将skip-gram的正采样权重矩阵以及负采样权重矩阵进行训练，训练完成之后取出正采样权重矩阵作为对应的词向量。
+  最后将skip-gram的正采样权重矩阵以及负采样权重矩阵进行训练，训练完成之后取出正采样权重矩阵作为对应的词向量。
 
